@@ -128,11 +128,14 @@ var contID = singlePost.length;
 
     // delete a particular post
     app.delete('/delete/:id', function(req, res) {
-        singlePost.remove({ id: req.params.id }, function (err) {
-            if (err) return handleError(err);
+        selPost = _.find(singlePost, function(itemPost){return itemPost.id == req.params.id});
+        var postIndex = singlePost.indexOf(selPost);
+        singlePost.splice(postIndex, 1);
+//        singlePost.remove({ id: req.params.id }, function (err) {
+//            if (err) return handleError(err);
             // removed!
             res.json(true);   
-        });    
+//        });
     });
 //});
 
