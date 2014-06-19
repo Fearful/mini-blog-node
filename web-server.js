@@ -6,12 +6,12 @@ var _ = require("underscore");
 var singlePost = [{
         id: 1,
         title: 'Post 1',
-        text:  'Texto del Post 2 .'
+        text:  'Texto del Post 1.'
 },
     {
         id: 2,
         title: 'Post 2',
-        text:  'Texto del Post 2 .'
+        text:  'Texto del Post 2.'
     }
 ];
 
@@ -87,10 +87,14 @@ var contID = singlePost.length;
         
     //get a particular post by ID
     app.get('/api/myPosts/:id', function(req, res){
-        singlePost.findOne({ id: req.params.id }, function(err, selPost) {
-            if (err) return console.error(err);
-            res.send (selPost);
-            });
+        selPost = _.find(singlePost, function(itemPost){return itemPost.id == req.params.id});
+        res.send(selPost);
+//        var taskIndex = singlePost.indexOf(selPost);
+//        myTasks[taskIndex].hecho = !myTasks[taskIndex].hecho;
+//        singlePost.findOne({ id: req.params.id }, function(err, selPost) {
+//            if (err) return console.error(err);
+//            res.send (selPost);
+//            });
 
     });
     
