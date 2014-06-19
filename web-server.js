@@ -1,7 +1,20 @@
 var express = require("express"),
     app     = express()
 var _ = require("underscore");
-var mongoose = require('mongoose');
+//var mongoose = require('mongoose');
+
+var singlePost = [{
+        id: 1,
+        title: 'Post 1',
+        text:  'Texto del Post 2 .'
+},
+    {
+        id: 2,
+        title: 'Post 2',
+        text:  'Texto del Post 2 .'
+    }
+];
+
 
 // configuration _______________________________________________________________________________________ 
 app.configure(function(){
@@ -26,47 +39,50 @@ app.get("/", function(req, res) {
 
 // mongo db ____________________________________________________________________________________________ 
 
-var db = mongoose.connection;
-
-db.on('error', console.error);
-
-db.once('open', function() {            
-    // Schema
-    var postSchema = new mongoose.Schema({
-        id: Number,
-        title: { type: String },
-        text:  { type: String }
-    });
-    // Mongoose also creates a MongoDB collection called 'Posts' for these documents.
-    var singlePost = mongoose.model('singlePost', postSchema);
-    
-    // examples ____________________________________________________________________________________________ 
-    
-    var post_example1 = new singlePost({
-        id: 1,
-        title: 'Recruiting Advice No One Tells You',
-        text:  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam consectetur venenatis blandit. Praesent vehicula, libero non pretium vulputate, lacus arcu facilisis                lectus, sed feugiat tellus nulla eu dolor. Nulla porta bibendum lectus quis euismod. Aliquam volutpat ultricies porttitor. Cras risus nisi, accumsan vel cursus ut,                    sollicitudin vitae dolor. Fusce scelerisque eleifend lectus in bibendum. Suspendisse lacinia egestas felis a volutpat.'
-    });
-
-    var post_example2 = new singlePost({
-        id: 2,
-        title: 'How to start writing and get closer to your goals',
-        text:  'You have been thinking about starting a blog or writing a novel for a long time. You want to write but you just never do it. The best time was 5 years ago; the second                 best time is now. So, what keeps you away from your goals?'
-    });
-    
-    var contID = 2;
-    
-    post_example1.save();
-    post_example2.save();
-    
+//var db = mongoose.connection;
+//
+//db.on('error', console.error);
+//
+//db.once('open', function() {
+//    // Schema
+//    var postSchema = new mongoose.Schema({
+//        id: Number,
+//        title: { type: String },
+//        text:  { type: String }
+//    });
+//    // Mongoose also creates a MongoDB collection called 'Posts' for these documents.
+//    var singlePost = mongoose.model('singlePost', postSchema);
+//
+//    // examples ____________________________________________________________________________________________
+//
+//    var post_example1 = new singlePost({
+//        id: 1,
+//        title: 'Recruiting Advice No One Tells You',
+//        text:  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam consectetur venenatis blandit. Praesent vehicula, libero non pretium vulputate, lacus arcu facilisis                lectus, sed feugiat tellus nulla eu dolor. Nulla porta bibendum lectus quis euismod. Aliquam volutpat ultricies porttitor. Cras risus nisi, accumsan vel cursus ut,                    sollicitudin vitae dolor. Fusce scelerisque eleifend lectus in bibendum. Suspendisse lacinia egestas felis a volutpat.'
+//    });
+//
+//    var post_example2 = new singlePost({
+//        id: 2,
+//        title: 'How to start writing and get closer to your goals',
+//        text:  'You have been thinking about starting a blog or writing a novel for a long time. You want to write but you just never do it. The best time was 5 years ago; the second                 best time is now. So, what keeps you away from your goals?'
+//    });
+//
+//    var contID = 2;
+//
+//    post_example1.save();
+//    post_example2.save();
+//
     // _____________________________________________________________________________________________________ 
-    
+
+var contID = singlePost.length;
+
     // get all posts
     app.get('/api/myPosts', function(req, res){
-        singlePost.find(function(err, myPosts) {
-            if (err) return console.error(err);
-            res.send (myPosts);
-        });
+//        singlePost.find(function(err, myPosts) {
+//            if (err) return console.error(err);
+//            res.send (myPosts);
+//        });
+        res.send (singlePost) ;
     });
         
     //get a particular post by ID
@@ -75,16 +91,18 @@ db.once('open', function() {
             if (err) return console.error(err);
             res.send (selPost);
             });
+
     });
     
     // create a new post
     app.put('/newPost', function(req, res) { 
-        var newPost = new singlePost({
+        var newPost = {
             id: ++contID,
-            title : req.body.title,
-            text : req.body.text
-        });
-        newPost.save();
+            title: req.body.title,
+            text: req.body.text
+        };
+
+        singlePost.push(newPost);
         res.json(true);
     });
     
@@ -106,8 +124,8 @@ db.once('open', function() {
             res.json(true);   
         });    
     });
-});
+//});
 
 // _____________________________________________________________________________________________________ 
 
-mongoose.connect('mongodb://localhost/test');
+//mongoose.connect('mongodb://localhost/test');
