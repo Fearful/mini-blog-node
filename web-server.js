@@ -112,11 +112,17 @@ var contID = singlePost.length;
     
     // update a created post
     app.post('/editPost', function(req, res) {
-        singlePost.findOne({ id: req.body.id }, function (err, selPost){
-            selPost.title = req.body.title;
-            selPost.text = req.body.text;
-            selPost.save();
-        });
+        selPost = _.find(singlePost, function(itemPost){return itemPost.id == req.body.id});
+        var postIndex = singlePost.indexOf(selPost);
+        singlePost[postIndex].title  = req.body.title;
+        singlePost[postIndex].text  = req.body.text;
+
+
+//        singlePost.findOne({ id: req.body.id }, function (err, selPost){
+//            selPost.title = req.body.title;
+//            selPost.text = req.body.text;
+
+//        });
         res.json(true);
     }); 
 
