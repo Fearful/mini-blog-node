@@ -10,7 +10,6 @@ app.controller('newPostCtrl', function($scope, blogService, $location, toaster) 
         };
         blogService.create(postData)
             .success(function (current, status, headers, config) {
-                debugger;
                 $location.path("/posts");
                 toaster.pop('success', "Post saved successfully!");
             })

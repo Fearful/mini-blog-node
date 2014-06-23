@@ -1,5 +1,7 @@
 app.controller('editPostCtrl', function($scope, $routeParams, blogService, $location, toaster) {
     //get the element by id
+
+    debugger;
     $scope.current = blogService.getById($routeParams.postId)
         .success(function (current, status, headers, config) {
             $scope.current = current;
@@ -12,7 +14,7 @@ app.controller('editPostCtrl', function($scope, $routeParams, blogService, $loca
     $scope.updatePost = function() {
         blogService.update($scope.current.id, $scope.current)
             .success(function (current, status, headers, config) {
-                $location.path("/posts/"+$scope.current.id);
+                $location.path("/posts/");
                 toaster.pop('success', "Post updated successfully!");
              })
             .error(function(current, status, headers, config) {

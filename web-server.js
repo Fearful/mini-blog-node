@@ -3,7 +3,7 @@ var express = require("express"),
 var _ = require("underscore");
 //var mongoose = require('mongoose');
 
-var singlePost = [{
+var posts = [{
         id: 1,
         title: 'Post 1',
         text:  'Texto del Post 1.'
@@ -74,7 +74,7 @@ app.get("/", function(req, res) {
 //
     // _____________________________________________________________________________________________________ 
 
-var contID = singlePost.length;
+var contID = posts.length;
 
     // get all posts
     app.get('/api/myPosts', function(req, res){
@@ -82,12 +82,12 @@ var contID = singlePost.length;
 //            if (err) return console.error(err);
 //            res.send (myPosts);
 //        });
-        res.send (singlePost) ;
+        res.send (posts) ;
     });
         
     //get a particular post by ID
     app.get('/api/myPosts/:id', function(req, res){
-        selPost = _.find(singlePost, function(itemPost){return itemPost.id == req.params.id});
+        selPost = _.find(posts, function(itemPost){return itemPost.id == req.params.id});
         res.send(selPost);
 //        var taskIndex = singlePost.indexOf(selPost);
 //        myTasks[taskIndex].hecho = !myTasks[taskIndex].hecho;
@@ -106,16 +106,16 @@ var contID = singlePost.length;
             text: req.body.text
         };
 
-        singlePost.push(newPost);
+        posts.push(newPost);
         res.json(true);
     });
     
     // update a created post
     app.post('/editPost', function(req, res) {
-        selPost = _.find(singlePost, function(itemPost){return itemPost.id == req.body.id});
-        var postIndex = singlePost.indexOf(selPost);
-        singlePost[postIndex].title  = req.body.title;
-        singlePost[postIndex].text  = req.body.text;
+        selPost = _.find(posts, function(itemPost){return itemPost.id == req.body.id});
+        var postIndex = posts.indexOf(selPost);
+        posts[postIndex].title  = req.body.title;
+        posts[postIndex].text  = req.body.text;
 
 
 //        singlePost.findOne({ id: req.body.id }, function (err, selPost){
@@ -128,9 +128,9 @@ var contID = singlePost.length;
 
     // delete a particular post
     app.delete('/delete/:id', function(req, res) {
-        selPost = _.find(singlePost, function(itemPost){return itemPost.id == req.params.id});
-        var postIndex = singlePost.indexOf(selPost);
-        singlePost.splice(postIndex, 1);
+        selPost = _.find(posts, function(itemPost){return itemPost.id == req.params.id});
+        var postIndex = posts.indexOf(selPost);
+        posts.splice(postIndex, 1);
 //        singlePost.remove({ id: req.params.id }, function (err) {
 //            if (err) return handleError(err);
             // removed!
