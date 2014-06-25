@@ -99,7 +99,7 @@ var contID = posts.length;
     });
     
     // create a new post
-    app.put('/newPost', function(req, res) { 
+    app.post('/newPost', function(req, res) {
         var newPost = {
             id: ++contID,
             title: req.body.title,
@@ -111,7 +111,7 @@ var contID = posts.length;
     });
     
     // update a created post
-    app.post('/editPost', function(req, res) {
+    app.put('/editPost', function(req, res) {
         selPost = _.find(posts, function(itemPost){return itemPost.id == req.body.id});
         var postIndex = posts.indexOf(selPost);
         posts[postIndex].title  = req.body.title;

@@ -17,12 +17,12 @@ app.service('blogService', function ($http, $location) {
     
         //add a new element to array
         this.create = function (postData) {
-            return $http.put('/newPost', postData);
+            return $http.post('/newPost', postData);
         };   
     
         //update blogItem matching by id
         this.update = function (blogItemId, blogItem) {
-            return $http.post('/editPost', blogItem);
+            return $http.put('/editPost', blogItem);
         };
     
         //remove blogItem matching by id
