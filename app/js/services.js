@@ -27,7 +27,6 @@ app.service('blogService', function ($http, $location) {
     
         //remove blogItem matching by id
         this.remove = function (blogItemId) {
-            return $http.delete('/delete/'+blogItemId);
-            
+            return $http.delete('/delete/'+blogItemId);            
         };
 }); 
